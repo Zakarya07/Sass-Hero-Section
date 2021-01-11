@@ -1,11 +1,11 @@
+// -------------------------------------------------------------Variables 
 $font_family: 'Source Sans Pro',
 sans-serif;
 $light_color:rgb(255, 255, 255);
 $tablet:768px;
+$laptop:1024px;
 
-
-// -------------------------------------------------------------Variables 
-
+// ------------------------------------------------------------- MIXIN and FUNCTIONS  
 @mixin flex_box_model($direction, $justify_content, $align_items) {
     display: flex;
     flex-direction: $direction;
@@ -30,14 +30,19 @@ $tablet:768px;
     @return $dark;
 }
 
-@mixin tablet_Responsive(){
+@mixin tablet_Responsive() {
     @media (min-width:#{$tablet}) {
         @content;
     }
 }
 
-// ------------------------------------------------------------- MIXIN and FUNCTIONS  
+@mixin laptop_Responsive() {
+    @media (min-width:#{$laptop}) {
+        @content;
+    }
+}
 
+// ------------------------------------------------------------------- C O D E ------------------------------------------------------------------
 * {
     margin: 0;
     padding: 0;
@@ -57,17 +62,26 @@ body {
 
     section.container_section {
 
-        // @include flex_box_model(row,flex-end,center);
+        @include laptop_Responsive() {
+            @include flex_box_model(row, center, center);
+        }
+
+        // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  B L A C K  _ _ _  S E C T I O N  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
         & .black_section {
-            background-color: rgb(36, 36, 46);
+            background-color: rgb(37, 37, 39);
             width: 100%;
+            position: relative;
+
+            @include laptop_Responsive() {
+                height: 100vh;
+                @include flex_box_model(column, space-between, unset);
+            }
 
             & header {
 
                 nav {
                     padding: .5vh 2vw 3vh;
-                    border: 1px solid #000;
 
                     a {
                         h1 {
@@ -75,10 +89,13 @@ body {
                             @include font_Size(2);
                             font-weight: 200;
 
+                            @include laptop_Responsive() {
+                                @include font_Size(3)
+                            }
+
                             span.phantom_registered {
 
                                 @include font_Size(.75);
-
                                 vertical-align: text-top;
                             }
                         }
@@ -91,7 +108,6 @@ body {
             /* Header end */
 
             .content_section {
-
                 display: flex;
                 @include flex_box_model(column, flex-start, unset);
                 padding-bottom: 5vh;
@@ -100,7 +116,7 @@ body {
                 @include tablet_Responsive() {
                     @include flex_box_model(row, center, stretch);
                     flex-wrap: wrap;
-                    height: 50vh;
+                    min-height: 45vh;
                 }
 
                 // End of RESPONSIVE
@@ -114,18 +130,34 @@ body {
                         width: 100%;
                     }
 
+                    @include laptop_Responsive() {
+                        width: auto;
+                        flex-grow: 1;
+                        @include flex_box_model(column, space-evenly, unset);
+                    }
+
                     h1 {
                         color: rgb(255, 255, 255);
                         @include font_Size(1.8);
-                        font-weight: 200;
-                        margin: 1px;
+                        @include font_weight_bold(200);
                         width: 40%;
                         text-align: center;
+
+                        @include laptop_Responsive() {
+                            @include font_Size(1.5);
+                            @include font_weight_bold(400);
+                            width: auto;
+                        }
                     }
 
                     h1.home_strong {
                         @include font_weight_bold(400);
                         text-decoration: underline;
+
+                        @include laptop_Responsive() {
+                            @include font_Size(2.6);
+                            @include font_weight_bold(900);
+                        }
                     }
                 }
 
@@ -135,8 +167,13 @@ body {
                     @include flex_box_model(column, center, center);
                     padding-bottom: 1vh;
 
-                    @include tablet_Responsive(){
+                    @include tablet_Responsive() {
                         width: 40%;
+                    }
+
+                    @include laptop_Responsive() {
+                        width: auto;
+                        flex-grow: 1;
                     }
 
                     h1 {
@@ -145,14 +182,30 @@ body {
                         @include font_Size(1.8);
                         margin: 2vh auto 1vh;
                         width: 60%;
+
+                        @include laptop_Responsive() {
+                            width: auto;
+                            @include font_Size(2.5);
+                            margin: 0;
+                        }
                     }
 
                     ul {
                         width: 50%;
 
+                        @include laptop_Responsive() {
+                            width: auto;
+                            @include flex_box_model(column, space-between, flex-start);
+                        }
+
                         li {
                             list-style-type: none;
                             @include font_Size(1.2);
+
+                            @include laptop_Responsive() {
+                                padding: .6vh 0;
+                                @include font_Size(1.5);
+                            }
 
                             a {
                                 color: $light_color;
@@ -171,12 +224,23 @@ body {
                         width: 40%;
                     }
 
+                    @include laptop_Responsive() {
+                        width: auto;
+                        flex-grow: 1;
+                    }
+
                     h1 {
                         color: $light_color;
                         @include text_transform(capitalize);
                         @include font_Size(1.8);
                         margin: 2vh auto 1vh;
                         width: 60%;
+
+                        @include laptop_Responsive() {
+                            @include font_Size(2.5);
+                            width: auto;
+                            margin: 0;
+                        }
                     }
 
                     ul {
@@ -185,6 +249,11 @@ body {
                         li {
                             list-style-type: none;
                             @include font_Size(1.2);
+
+                            @include laptop_Responsive() {
+                                padding: .6vh 0;
+                                @include font_Size(1.5);
+                            }
 
                             a {
                                 color: $light_color;
@@ -199,7 +268,25 @@ body {
 
             // Content section end
 
+            footer {
+                h1 {
+                    display: none;
+
+                    @include laptop_Responsive() {
+                        display: block;
+                        color: darken($light_color, 60%);
+                        @include text_transform(capitalize);
+                        position: absolute;
+                        bottom: 0;
+                        left: 1vw;
+                        @include font_weight_bold(400);
+                        @include font_Size(1.5);
+                    }
+                }
+            }
         }
+
+        // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  Y E L L O W _ _ _ S E C T I O N  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
         & .yellow_section {
             background-color: #ffd000;
@@ -208,18 +295,27 @@ body {
             padding: 1vh 2vw;
             width: 100%;
 
-            @include tablet_Responsive(){
-                height: 40vh;
+            @include tablet_Responsive() {
+                min-height: 45vh;
+            }
+
+            @include laptop_Responsive() {
+                height: 100vh;
             }
 
             h1 {
                 @include font_Size(1.25);
-                font-weight: 600;
+                @include font_weight_bold(600);
+
                 text-align: center;
                 margin: 1.5vh auto 3vh;
 
-                @include tablet_Responsive(){
+                @include tablet_Responsive() {
                     @include font_Size(2.5);
+                }
+
+                @include laptop_Responsive() {
+                    @include font_weight_bold(700);
                 }
             }
 
@@ -229,14 +325,35 @@ body {
                 @include font_Size(1.1);
                 @include font_weight_bold(400);
 
-                @include tablet_Responsive(){
-                    @include font_Size(1.25)
+
+                @include tablet_Responsive() {
+                    @include font_Size(1.2)
+                }
+
+                @include laptop_Responsive() {
+                    @include font_Size(1.5);
+                    margin: 0;
                 }
 
                 a {
                     color: #4e16e7;
                     transition: all .5s linear;
                     background-clip: content-box;
+
+                    @include laptop_Responsive() {
+                        color: darken($light_color, 40%)
+                    }
+
+                    &:hover {
+                        @include laptop_Responsive() {
+                            color: darken($light_color, 60%);
+                            display: inline-block;
+                            transform: scale(1.05);
+                            padding: 0 1vw;
+                            background-clip: content-box;
+                        }
+
+                    }
                 }
 
             }
@@ -252,15 +369,30 @@ body {
                     border-radius: 20vw;
                     background: transparent;
                     border: 1px solid rgb(68, 67, 67);
-                    @include tablet_Responsive(){
+                    transition: transform .5s, color 1s;
+
+                    @include tablet_Responsive() {
                         @include font_Size(1.5);
-                        min-width: 35vw;                    }
+                        min-width: 30vw;
+                        padding: .5em 1em;
+                    }
+
+                    @include laptop_Responsive() {
+                        @include font_Size(1.5);
+                        min-width: 25vw;
+                    }
+
+                    &:hover {
+                        @include laptop_Responsive() {
+                            transform: translateX(2vw);
+                            color: lighten($light_color, 10%);
+                        }
+                    }
                 }
             }
 
         }
 
     }
-
 
 }
