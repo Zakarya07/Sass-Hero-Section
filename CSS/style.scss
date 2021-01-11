@@ -1,0 +1,266 @@
+$font_family: 'Source Sans Pro',
+sans-serif;
+$light_color:rgb(255, 255, 255);
+$tablet:768px;
+
+
+// -------------------------------------------------------------Variables 
+
+@mixin flex_box_model($direction, $justify_content, $align_items) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify_content;
+    align-items: $align_items;
+}
+
+@mixin font_weight_bold($value) {
+    font-weight: $value;
+}
+
+@mixin text_transform($value) {
+    text-transform: $value;
+}
+
+@mixin font_Size($value) {
+    font-size:#{$value}em;
+}
+
+@function darkness($color_to_dark) {
+    $dark: darken($color_to_dark, 10%);
+    @return $dark;
+}
+
+@mixin tablet_Responsive(){
+    @media (min-width:#{$tablet}) {
+        @content;
+    }
+}
+
+// ------------------------------------------------------------- MIXIN and FUNCTIONS  
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body a {
+    text-decoration: none;
+}
+
+body {
+    font-family: $font_family;
+
+    section.container_section {
+
+        // @include flex_box_model(row,flex-end,center);
+
+        & .black_section {
+            background-color: rgb(36, 36, 46);
+            width: 100%;
+
+            & header {
+
+                nav {
+                    padding: .5vh 2vw 3vh;
+                    border: 1px solid #000;
+
+                    a {
+                        h1 {
+                            color: $light_color;
+                            @include font_Size(2);
+                            font-weight: 200;
+
+                            span.phantom_registered {
+
+                                @include font_Size(.75);
+
+                                vertical-align: text-top;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+            /* Header end */
+
+            .content_section {
+
+                display: flex;
+                @include flex_box_model(column, flex-start, unset);
+                padding-bottom: 5vh;
+
+                // RESPONSIVE
+                @include tablet_Responsive() {
+                    @include flex_box_model(row, center, stretch);
+                    flex-wrap: wrap;
+                    height: 50vh;
+                }
+
+                // End of RESPONSIVE
+
+                & .home {
+                    @include flex_box_model(row, space-around, center);
+                    padding: 2vh 0;
+                    flex-wrap: wrap;
+
+                    @include tablet_Responsive() {
+                        width: 100%;
+                    }
+
+                    h1 {
+                        color: rgb(255, 255, 255);
+                        @include font_Size(1.8);
+                        font-weight: 200;
+                        margin: 1px;
+                        width: 40%;
+                        text-align: center;
+                    }
+
+                    h1.home_strong {
+                        @include font_weight_bold(400);
+                        text-decoration: underline;
+                    }
+                }
+
+                /* Div home end */
+
+                & .about {
+                    @include flex_box_model(column, center, center);
+                    padding-bottom: 1vh;
+
+                    @include tablet_Responsive(){
+                        width: 40%;
+                    }
+
+                    h1 {
+                        color: $light_color;
+                        @include text_transform(capitalize);
+                        @include font_Size(1.8);
+                        margin: 2vh auto 1vh;
+                        width: 60%;
+                    }
+
+                    ul {
+                        width: 50%;
+
+                        li {
+                            list-style-type: none;
+                            @include font_Size(1.2);
+
+                            a {
+                                color: $light_color;
+                            }
+                        }
+                    }
+                }
+
+                // /* Div about end */
+
+                & .services {
+                    @include flex_box_model(column, center, center);
+                    padding-bottom: 1vh;
+
+                    @include tablet_Responsive() {
+                        width: 40%;
+                    }
+
+                    h1 {
+                        color: $light_color;
+                        @include text_transform(capitalize);
+                        @include font_Size(1.8);
+                        margin: 2vh auto 1vh;
+                        width: 60%;
+                    }
+
+                    ul {
+                        width: 50%;
+
+                        li {
+                            list-style-type: none;
+                            @include font_Size(1.2);
+
+                            a {
+                                color: $light_color;
+                            }
+                        }
+                    }
+
+                }
+
+                // Services Div end
+            }
+
+            // Content section end
+
+        }
+
+        & .yellow_section {
+            background-color: #ffd000;
+            @include flex_box_model(row, space-around, center);
+            flex-wrap: wrap;
+            padding: 1vh 2vw;
+            width: 100%;
+
+            @include tablet_Responsive(){
+                height: 40vh;
+            }
+
+            h1 {
+                @include font_Size(1.25);
+                font-weight: 600;
+                text-align: center;
+                margin: 1.5vh auto 3vh;
+
+                @include tablet_Responsive(){
+                    @include font_Size(2.5);
+                }
+            }
+
+            p {
+                padding: .5em 1em;
+                margin-bottom: 2vh;
+                @include font_Size(1.1);
+                @include font_weight_bold(400);
+
+                @include tablet_Responsive(){
+                    @include font_Size(1.25)
+                }
+
+                a {
+                    color: #4e16e7;
+                    transition: all .5s linear;
+                    background-clip: content-box;
+                }
+
+            }
+
+            .align_button {
+                @include flex_box_model(row, flex-end, center);
+                width: 90%;
+
+                button {
+                    min-width: 40vw;
+                    padding: 1.5vh 2vw;
+                    @include font_Size(1.1);
+                    border-radius: 20vw;
+                    background: transparent;
+                    border: 1px solid rgb(68, 67, 67);
+                    @include tablet_Responsive(){
+                        @include font_Size(1.5);
+                        min-width: 35vw;                    }
+                }
+            }
+
+        }
+
+    }
+
+
+}
